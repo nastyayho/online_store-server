@@ -7,19 +7,14 @@ module.exports = function (req, res, next) {
     try {
         const token = req.headers.authorization.split(' ')[1] // Bearer dasdadfdfgdgsdfs
         if (!token) {
-            console.log('нет токена')
             return res
                 .status(401)
                 .json({ message: 'Пользователь не авторизован' })
         }
-        const decoded = jwt.verify(token, procss.env.SECRET_KEY)
-        console.log('есть токен')
+        const decoded = jwt.verify(token, process.env.SECRET_KEY)
         req.user = decoded
         next()
     } catch (e) {
-        const token = req.headers.authorization.split(' ')[1] // Bearer dasdadfdfgdgsdfs
-        console.log('че то там не вышло')
-        console.log({ token })
         res.status(401).json({ message: 'Пользователь не авторизован' })
     }
 }
